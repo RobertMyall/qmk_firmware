@@ -19,13 +19,28 @@
 #define _BASE 0
 #define _FN1 1
 
+enum custom_keycodes {
+  MK_LOCK = SAFE_RANGE,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case MK_LOCK:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LWIN("l"));
+      }
+      break;
+  }
+  return true;
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_BASE] = LAYOUT(
 		KC_F14, KC_F15, KC_F16, \
 		KC_VOLD, KC_MUTE, KC_VOLU, \
 		KC_MPRV, KC_MPLY, KC_MNXT, \
-		KC_F17, KC_F13, KC_F18 \
+		MK_LOCK, KC_F13, KC_F18 \
 	),
   
 	[_FN1] = LAYOUT(
